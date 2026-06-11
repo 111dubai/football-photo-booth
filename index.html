@@ -6,15 +6,11 @@
 <title>111 Events Football Photo Booth</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
-font-family:Arial, sans-serif;
-background:linear-gradient(180deg,#0d5e2a,#0a2b13,#041108);
+font-family:Arial,sans-serif;
+background:linear-gradient(180deg,#111,#0a2b13,#000);
 color:white;
 display:flex;
 justify-content:center;
@@ -27,16 +23,8 @@ max-width:450px;
 text-align:center;
 }
 
-h1{
-margin-bottom:8px;
-font-size:26px;
-}
-
-.subtitle{
-margin-bottom:15px;
-opacity:0.95;
-font-size:15px;
-}
+h1{font-size:26px;margin-bottom:8px;}
+.subtitle{font-size:15px;margin-bottom:15px;}
 
 .frame{
 position:relative;
@@ -46,11 +34,10 @@ background:black;
 border:6px solid white;
 border-radius:22px;
 overflow:hidden;
-box-shadow:0 0 35px rgba(0,0,0,0.5);
+box-shadow:0 0 35px rgba(0,0,0,.5);
 }
 
-video,
-canvas{
+video,canvas{
 width:100%;
 height:100%;
 object-fit:cover;
@@ -63,23 +50,21 @@ pointer-events:none;
 border:10px solid white;
 }
 
-.logo-right{
+.logo{
 position:absolute;
 top:15px;
 right:15px;
-background:white;
-color:#0a2b13;
-padding:8px 14px;
-border-radius:20px;
-font-weight:bold;
-font-size:12px;
+width:95px;
+background:rgba(0,0,0,.55);
+padding:8px;
+border-radius:14px;
+border:2px solid white;
 }
 
 .top{
 position:absolute;
-top:70px;
+top:80px;
 width:100%;
-text-align:center;
 font-size:31px;
 font-weight:bold;
 text-shadow:0 0 12px black;
@@ -89,7 +74,6 @@ text-shadow:0 0 12px black;
 position:absolute;
 bottom:35px;
 width:100%;
-text-align:center;
 font-size:24px;
 font-weight:bold;
 text-shadow:0 0 12px black;
@@ -112,12 +96,9 @@ text-shadow:0 0 10px black;
 transform:rotate(-8deg);
 }
 
-.controls{
-margin-top:15px;
-}
+.controls{margin-top:15px;}
 
-button,
-a{
+button,a{
 background:white;
 color:#0a2b13;
 border:none;
@@ -138,13 +119,11 @@ align-items:center;
 justify-content:center;
 font-size:110px;
 font-weight:bold;
-background:rgba(0,0,0,0.45);
+background:rgba(0,0,0,.45);
 z-index:20;
 }
 
-#download{
-display:none;
-}
+#download{display:none;}
 </style>
 </head>
 
@@ -156,20 +135,18 @@ display:none;
 <p class="subtitle">Strike a pose • Celebrate the moment • Make some noise</p>
 
 <div class="frame">
-
 <video id="video" autoplay playsinline></video>
 <canvas id="canvas" style="display:none;"></canvas>
 
 <div id="countdown">3</div>
 
 <div class="overlay">
-<div class="logo-right">111 EVENTS ⚽</div>
+<img src="logo.png" class="logo" id="logo">
 <div class="top">#GAMEFACEON</div>
 <div class="cheer">CHEER!</div>
 <div class="ball">⚽🔥</div>
 <div class="bottom">🔥 GOAAAAAAAL 🔥</div>
 </div>
-
 </div>
 
 <div class="controls">
@@ -183,34 +160,32 @@ display:none;
 </div>
 
 <script>
-const video = document.getElementById("video");
-const canvas = document.getElementById("canvas");
-const download = document.getElementById("download");
-const countdown = document.getElementById("countdown");
-
-let stream;
+const video=document.getElementById("video");
+const canvas=document.getElementById("canvas");
+const download=document.getElementById("download");
+const countdown=document.getElementById("countdown");
+const logo=document.getElementById("logo");
 
 async function startCamera(){
 try{
-stream = await navigator.mediaDevices.getUserMedia({
-video:{ facingMode:"user" },
+const stream=await navigator.mediaDevices.getUserMedia({
+video:{facingMode:"user"},
 audio:false
 });
-video.srcObject = stream;
+video.srcObject=stream;
 }catch(error){
-alert("Camera access denied. Please open the live GitHub Pages link in Safari or Chrome and allow camera permissions.");
+alert("Camera access denied. Open the live GitHub Pages link in Safari/Chrome and allow camera.");
 console.error(error);
 }
 }
 
 function startCapture(){
-let count = 3;
+let count=3;
 countdown.style.display="flex";
 countdown.innerHTML=count;
 
 const timer=setInterval(()=>{
 count--;
-
 if(count>0){
 countdown.innerHTML=count;
 }else{
@@ -258,18 +233,17 @@ ctx.fillText("CHEER!",0,0);
 ctx.restore();
 
 ctx.shadowBlur=0;
-ctx.fillStyle="white";
-ctx.fillRect(760,30,260,60);
 
-ctx.fillStyle="#0a2b13";
-ctx.font="bold 25px Arial";
-ctx.fillText("111 EVENTS ⚽",890,70);
+if(logo.complete){
+ctx.fillStyle="rgba(0,0,0,0.55)";
+ctx.fillRect(820,35,210,120);
+ctx.drawImage(logo,835,50,180,90);
+}
 
 video.style.display="none";
 canvas.style.display="block";
 
 const image=canvas.toDataURL("image/png");
-
 download.href=image;
 download.download="111-events-gamefaceon.png";
 download.style.display="inline-block";
@@ -283,10 +257,8 @@ download.style.display="none";
 
 function shareWhatsApp(){
 window.open(
-"https://wa.me/?text=" +
-encodeURIComponent(
-"⚽ #GameFaceOn ⚽ #Goaaaaaaal ⚽ #Cheer\n\nBig Smiles. Bigger Memories.\n\nPhoto Booth by 111 Events"
-),
+"https://wa.me/?text="+
+encodeURIComponent("⚽ #GameFaceOn ⚽ #Goaaaaaaal ⚽ #Cheer\n\nBig Smiles. Bigger Memories.\n\nPhoto Booth by 111 Events"),
 "_blank"
 );
 }

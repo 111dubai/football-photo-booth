@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Big Smiles. Bigger Memories.</title>
+<title>111 Events Football Photo Booth</title>
 
 <style>
 *{
@@ -14,7 +14,7 @@ box-sizing:border-box;
 
 body{
 font-family:Arial, sans-serif;
-background:#0a2b13;
+background:linear-gradient(180deg,#0d5e2a,#0a2b13,#041108);
 color:white;
 display:flex;
 justify-content:center;
@@ -29,22 +29,24 @@ text-align:center;
 
 h1{
 margin-bottom:8px;
-font-size:28px;
+font-size:26px;
 }
 
 .subtitle{
 margin-bottom:15px;
-opacity:0.9;
+opacity:0.95;
+font-size:15px;
 }
 
 .frame{
 position:relative;
 width:100%;
-aspect-ratio:9/16;
+aspect-ratio:4/5;
 background:black;
 border:6px solid white;
-border-radius:20px;
+border-radius:22px;
 overflow:hidden;
+box-shadow:0 0 35px rgba(0,0,0,0.5);
 }
 
 video,
@@ -61,51 +63,53 @@ pointer-events:none;
 border:10px solid white;
 }
 
-.top{
-position:absolute;
-top:90px;
-width:100%;
-text-align:center;
-font-size:30px;
-font-weight:bold;
-text-shadow:0 0 10px black;
-}
-
-.bottom{
-position:absolute;
-bottom:40px;
-width:100%;
-text-align:center;
-font-size:22px;
-font-weight:bold;
-text-shadow:0 0 10px black;
-}
-
-.ball{
-position:absolute;
-right:20px;
-bottom:100px;
-font-size:55px;
-}
-
-.logo-left,
 .logo-right{
 position:absolute;
 top:15px;
+right:15px;
 background:white;
 color:#0a2b13;
-padding:8px 12px;
+padding:8px 14px;
 border-radius:20px;
 font-weight:bold;
 font-size:12px;
 }
 
-.logo-left{
-left:15px;
+.top{
+position:absolute;
+top:70px;
+width:100%;
+text-align:center;
+font-size:31px;
+font-weight:bold;
+text-shadow:0 0 12px black;
 }
 
-.logo-right{
-right:15px;
+.bottom{
+position:absolute;
+bottom:35px;
+width:100%;
+text-align:center;
+font-size:24px;
+font-weight:bold;
+text-shadow:0 0 12px black;
+}
+
+.ball{
+position:absolute;
+right:20px;
+bottom:90px;
+font-size:52px;
+}
+
+.cheer{
+position:absolute;
+left:20px;
+bottom:100px;
+font-size:28px;
+font-weight:bold;
+text-shadow:0 0 10px black;
+transform:rotate(-8deg);
 }
 
 .controls{
@@ -132,9 +136,9 @@ inset:0;
 display:none;
 align-items:center;
 justify-content:center;
-font-size:120px;
+font-size:110px;
 font-weight:bold;
-background:rgba(0,0,0,0.4);
+background:rgba(0,0,0,0.45);
 z-index:20;
 }
 
@@ -148,8 +152,8 @@ display:none;
 
 <div class="container">
 
-<h1>⚽ Big Smiles. Bigger Memories.</h1>
-<p class="subtitle">Get Your Game Face On!</p>
+<h1>⚽ BIG SMILES. BIGGER MEMORIES.</h1>
+<p class="subtitle">Strike a pose • Celebrate the moment • Make some noise</p>
 
 <div class="frame">
 
@@ -159,12 +163,11 @@ display:none;
 <div id="countdown">3</div>
 
 <div class="overlay">
-<div class="logo-left">SPONSOR</div>
-<div class="logo-right">111 EVENTS</div>
-
-<div class="top">BIG SMILES</div>
-<div class="ball">⚽</div>
-<div class="bottom">BIGGER MEMORIES</div>
+<div class="logo-right">111 EVENTS ⚽</div>
+<div class="top">#GAMEFACEON</div>
+<div class="cheer">CHEER!</div>
+<div class="ball">⚽🔥</div>
+<div class="bottom">🔥 GOAAAAAAAL 🔥</div>
 </div>
 
 </div>
@@ -173,16 +176,13 @@ display:none;
 <button onclick="startCamera()">Start Camera</button>
 <button onclick="startCapture()">Capture</button>
 <button onclick="retake()">Retake</button>
-
 <a id="download">Save Photo</a>
-
 <button onclick="shareWhatsApp()">WhatsApp</button>
 </div>
 
 </div>
 
 <script>
-
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const download = document.getElementById("download");
@@ -191,94 +191,79 @@ const countdown = document.getElementById("countdown");
 let stream;
 
 async function startCamera(){
-
 try{
-
 stream = await navigator.mediaDevices.getUserMedia({
-video:{
-facingMode:"user"
-},
+video:{ facingMode:"user" },
 audio:false
 });
-
 video.srcObject = stream;
-
 }catch(error){
-
-alert("Camera access denied. Please allow camera permissions.");
+alert("Camera access denied. Please open the live GitHub Pages link in Safari or Chrome and allow camera permissions.");
 console.error(error);
-
 }
 }
 
 function startCapture(){
-
 let count = 3;
-
 countdown.style.display="flex";
 countdown.innerHTML=count;
 
 const timer=setInterval(()=>{
-
 count--;
 
 if(count>0){
-
 countdown.innerHTML=count;
-
 }else{
-
 clearInterval(timer);
-
 countdown.innerHTML="⚽";
-
 setTimeout(()=>{
-
 countdown.style.display="none";
 capture();
-
 },600);
-
 }
-
 },1000);
-
 }
 
 function capture(){
-
 canvas.width=1080;
-canvas.height=1920;
+canvas.height=1350;
 
 const ctx=canvas.getContext("2d");
 
-ctx.drawImage(video,0,0,1080,1920);
+ctx.drawImage(video,0,0,1080,1350);
 
 ctx.strokeStyle="white";
-ctx.lineWidth=25;
-ctx.strokeRect(15,15,1050,1890);
+ctx.lineWidth=28;
+ctx.strokeRect(15,15,1050,1320);
 
 ctx.fillStyle="white";
 ctx.textAlign="center";
+ctx.shadowColor="black";
+ctx.shadowBlur=18;
 
-ctx.font="bold 80px Arial";
-ctx.fillText("BIG SMILES",540,180);
+ctx.font="bold 76px Arial";
+ctx.fillText("#GAMEFACEON",540,130);
 
-ctx.font="bold 65px Arial";
-ctx.fillText("BIGGER MEMORIES",540,1780);
+ctx.font="bold 70px Arial";
+ctx.fillText("🔥 GOAAAAAAAL 🔥",540,1240);
 
-ctx.font="90px Arial";
-ctx.fillText("⚽",930,1650);
+ctx.font="95px Arial";
+ctx.fillText("⚽🔥",885,1080);
 
+ctx.font="bold 48px Arial";
+ctx.save();
+ctx.translate(165,1080);
+ctx.rotate(-0.15);
+ctx.fillText("CHEER!",0,0);
+ctx.restore();
+
+ctx.shadowBlur=0;
 ctx.fillStyle="white";
-ctx.fillRect(40,40,220,60);
-
-ctx.fillRect(820,40,220,60);
+ctx.fillRect(760,30,260,60);
 
 ctx.fillStyle="#0a2b13";
-ctx.font="bold 22px Arial";
-ctx.fillText("SPONSOR",150,80);
-ctx.fillText("111 EVENTS",930,80);
+ctx.font="bold 25px Arial";
+ctx.fillText("111 EVENTS ⚽",890,70);
 
 video.style.display="none";
 canvas.style.display="block";
@@ -286,31 +271,25 @@ canvas.style.display="block";
 const image=canvas.toDataURL("image/png");
 
 download.href=image;
-download.download="big-smiles-bigger-memories.png";
+download.download="111-events-gamefaceon.png";
 download.style.display="inline-block";
-
 }
 
 function retake(){
-
 canvas.style.display="none";
 video.style.display="block";
 download.style.display="none";
-
 }
 
 function shareWhatsApp(){
-
 window.open(
 "https://wa.me/?text=" +
 encodeURIComponent(
-"I got my game face on! ⚽ Big Smiles. Bigger Memories."
+"⚽ #GameFaceOn ⚽ #Goaaaaaaal ⚽ #Cheer\n\nBig Smiles. Bigger Memories.\n\nPhoto Booth by 111 Events"
 ),
 "_blank"
 );
-
 }
-
 </script>
 
 </body>
